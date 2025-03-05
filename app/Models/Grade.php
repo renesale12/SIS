@@ -8,19 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class Grade extends Model {
     use HasFactory;
     
-    protected $fillable = ['student_id', 'subject_id', 'grade'];
+    protected $fillable = ['enrollment_id', 'grade'];
 
     protected $casts = [
-        'grade' => 'decimal:2', // Ensure grades are stored as decimals with 2 decimal places
+        'grade' => 'decimal:2', 
     ];
 
-    public function student() {
-        return $this->belongsTo(Student::class);
+    // Get the enrollment associated with the grade
+    public function enrollment()
+    {
+        return $this->belongsTo(Enrollment::class);
     }
 
-    public function subject() {
-        return $this->belongsTo(Subject::class);
+    // Get the student through enrollment
+    public function student()
+    {
+        return $this->hasOneThrough(Student::class, Enrollment::class, 'id', 'id', 'enrollment_id', 'student_id');
+    }
+
+    // Get the subject through enrollment
+    public function subject()
+    {
+        return $this->hasOneThrough(Subject::class, Enrollment::class, 'id', 'id', 'enrollment_id', 'subject_id');
     }
 }
+
 
 

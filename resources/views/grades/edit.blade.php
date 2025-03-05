@@ -14,29 +14,23 @@
             <input type="hidden" name="grade_id" id="edit_grade_id">
 
             <div class="mb-3">
-                <label for="edit_student_id" class="form-label fw-bold">Student</label>
-                <select name="student_id" id="edit_student_id" class="form-select border-2" required>
-                    @foreach ($students as $student)
-                        <option value="{{ $student->id }}">{{ $student->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <label for="student_name" class="form-label fw-bold">Student</label>
+    <input type="text" id="student_name" class="form-control border-2" 
+           value="{{ optional($grade->student)->name ?? 'Unknown Student' }}" readonly>
+</div>
 
-            <div class="mb-3">
-                <label for="edit_subject_id" class="form-label fw-bold">Subject</label>
-                <select name="subject_id" id="edit_subject_id" class="form-select border-2" required>
-                    @foreach ($subjects as $subject)
-                        <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+<div class="mb-3">
+    <label for="subject_name" class="form-label fw-bold">Subject</label>
+    <input type="text" id="subject_name" class="form-control border-2" 
+           value="{{ optional($grade->subject)->name ?? 'Unknown Subject' }}" readonly>
+</div>
 
-            <div class="mb-3">
-                <label for="edit_grade" class="form-label fw-bold">Grade</label>
-                <input type="number" name="grade" id="edit_grade" class="form-control border-2" 
-                       min="1.00" max="5.00" step="0.01" 
-                       value="{{ old('grade', $grade->grade ?? '') }}" required>
-            </div>
+<div class="mb-3">
+    <label for="edit_grade" class="form-label fw-bold">Grade</label>
+    <input type="number" name="grade" id="edit_grade" class="form-control border-2" 
+           min="1.00" max="5.00" step="0.01" 
+           value="{{ old('grade', $grade->grade ?? '') }}" required>
+</div>
 
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>

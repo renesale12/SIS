@@ -4,21 +4,16 @@ namespace Database\Factories;
 
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Student>
- */
-class StudentFactory extends Factory
-{
+class StudentFactory extends Factory {
     protected $model = Student::class;
 
-    public function definition()
-    {
+    public function definition(): array {
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'course' => $this->faker->randomElement(['IT', 'Engineering', 'Business', 'Education'])
+            'password' => Hash::make('12345678'), // Default password for all seeded students
         ];
     }
 }
-

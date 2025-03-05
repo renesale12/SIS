@@ -45,5 +45,19 @@ class EnrollmentController extends Controller
         $enrollment->delete();
         return redirect()->route('enrollments.index')->with('success', 'Enrollment deleted successfully.');
     }
+
+    public function update(Request $request, Enrollment $enrollment)
+{
+    $request->validate([
+        'subject_id' => 'required|exists:subjects,id',
+    ]);
+
+    // Update only the subject
+    $enrollment->update([
+        'subject_id' => $request->subject_id,
+    ]);
+
+    return redirect()->route('enrollments.index')->with('success', 'Enrollment updated successfully.');
+}
     
 }

@@ -29,10 +29,10 @@
                                 @foreach($grades as $grade)
                                 <tr>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 px-3">{{ $grade->student->name }}</p>
+                                    <p class="text-xs font-weight-bold mb-0 px-3">{{ optional($grade->student)->name ?? 'Unknown Student' }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0 px-3">{{ $grade->subject->name }}</p>
+                                        <p class="text-xs font-weight-bold mb-0 px-3">{{ optional($grade->subject)->name ?? 'Unknown Subject' }}</p>
                                     </td>
                                     <td>
                                         <p class="text-xs font-weight-bold mb-0 px-3">{{ $grade->grade }}</p>

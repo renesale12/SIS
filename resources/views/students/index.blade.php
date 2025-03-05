@@ -14,14 +14,13 @@
           </div>
         </div>
         <div class="card-body px-0 pb-2">
-          <!-- Display success message -->
           @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           @endif
-           @if ($errors->any())
+          @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -29,53 +28,59 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+          @endif
 
-          <!-- Added a fixed-height container with scroll -->
           <div class="table-responsive p-0" style="max-height: 550px; overflow-y: auto;">
             <table class="table align-items-center mb-0">
-              <thead class="sticky-top bg-white"> <!-- Made header sticky -->
+              <thead class="sticky-top bg-white">
                 <tr>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 10%">ID</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 25%">Name</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="width: 25%">Email</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="width: 20%">Course</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="width: 20%">Actions</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 25%">Email</th>
+                  <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 20%">Course</th> -->
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" style="width: 20%">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($students as $student)
-                <tr>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0 px-3">{{ $student->id }}</p>
-                  </td>
-                  <td>
-                    <div class="d-flex px-3 py-1">
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">{{ $student->name }}</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="text-xs text-secondary mb-0">{{ $student->email }}</p>
-                  </td>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ $student->course }}</p>
-                  </td>
-                  <td class="align-middle">
-                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-link text-warning text-gradient px-3 mb-0">
-                      <i class="material-symbols-rounded">edit</i> Edit
-                    </a>
-                    <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-link text-danger text-gradient px-3 mb-0">
-                        <i class="material-symbols-rounded">delete</i> Delete
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach
+              @foreach($students as $student)
+                        <tr>
+                          <td>
+                            <p class="text-xs font-weight-bold mb-0 px-3">{{ $student->id }}</p>
+                          </td>
+                          <td>
+                            <div class="d-flex px-3 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">{{ $student->name }}</h6>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <p class="text-xs text-secondary mb-0">{{ $student->email }}</p>
+                          </td>
+                          <!-- <td>
+                            <p class="text-xs font-weight-bold mb-0">{{ $student->course }}</p>
+                          </td> -->
+                          <td class="align-middle">
+                            <button type="button" class="btn btn-link text-warning text-gradient px-3 mb-0"
+                              data-bs-toggle="modal" data-bs-target="#editStudentModal{{ $student->id }}">
+                              <i class="material-symbols-rounded">edit</i> Edit
+                            </button>
+
+                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-link text-danger text-gradient px-3 mb-0">
+                                <i class="material-symbols-rounded">delete</i> Delete
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+
+                        <!-- Include Edit Modal Inside the Loop -->
+                        @include('students.edit', ['student' => $student])
+
+                        @endforeach
+
               </tbody>
             </table>
           </div>
@@ -87,6 +92,7 @@
 
 <!-- Add Student Modal -->
 @include('students.create')
+
 
 
 <style>
@@ -110,13 +116,12 @@
   background: #555;
 }
 
-/* Ensure sticky header works properly */
+/* Sticky header styles */
 .sticky-top {
   top: 0;
   z-index: 1020;
 }
 
-/* Add shadow to sticky header */
 .table thead.sticky-top {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }

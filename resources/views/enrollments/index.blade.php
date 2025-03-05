@@ -35,9 +35,11 @@
                                         <p class="text-xs font-weight-bold mb-0 px-3">{{ $enrollment->subject->name }}</p>
                                     </td>
                                     <td class="align-middle">
-                                        <button type="button" class="btn btn-link text-warning text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#editEnrollmentModal">
-                                            <i class="material-symbols-rounded">edit</i> Edit
-                                        </button>
+                                    <button type="button" class="btn btn-link text-warning text-gradient px-3 mb-0" data-bs-toggle="modal" data-bs-target="#editEnrollmentModal{{ $enrollment->id }}">
+                                        <i class="material-symbols-rounded">edit</i> Edit
+                                    </button>
+
+
                                         <form action="{{ route('enrollments.destroy', $enrollment->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -47,6 +49,10 @@
                                         </form>
                                     </td>
                                 </tr>
+
+
+                                @include('enrollments.edit', ['enrollment' => $enrollment, 'subjects' => $subjects])
+                                
                                 @endforeach
                             </tbody>
                         </table>
@@ -56,6 +62,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Include the modal here and pass the students and subjects -->
 @include('enrollments.create')

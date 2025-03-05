@@ -10,4 +10,6 @@ class Subject extends Model
     use HasFactory;
 
     protected $fillable = ['code', 'name', 'units']; // Ensure these match your database columns
+
+    
 }
