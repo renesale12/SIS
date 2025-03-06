@@ -77,10 +77,10 @@ class GradeController extends Controller {
     }
 
     // Update an existing grade
-   public function update(Request $request, $id) {
-    $request->validate([
-        'grade' => 'required|numeric|min:1|max:5',
-    ]);
+   public function update(GradeRequest $request, $id) {
+    // $request->validate([
+    //     'grade' => 'required|numeric|min:1|max:5',
+    // ]);
 
     $grade = Grade::findOrFail($id);
     $grade->update($request->all());

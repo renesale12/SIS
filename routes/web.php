@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentViewController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\DashboardController;
 
 // Welcome Page (Public Route)
 Route::get('/', function () {
@@ -19,9 +20,7 @@ Route::get('/', function () {
 
 // **Admin Dashboard (Only Admins Can Access)**
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // CRUD Routes for Admin
     Route::resource('students', StudentController::class);

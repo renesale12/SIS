@@ -11,5 +11,9 @@ class Subject extends Model
 
     protected $fillable = ['code', 'name', 'units']; // Ensure these match your database columns
 
-    
+    public function enrollments()
+{
+    return $this->hasMany(Enrollment::class);
+}
+
 }

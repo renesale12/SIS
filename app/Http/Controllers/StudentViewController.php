@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Enrollment;
 use App\Models\Grade;
 
-
 class StudentViewController extends Controller
 {
     /**
@@ -24,10 +23,23 @@ class StudentViewController extends Controller
 
         // Get student's enrolled subjects with grades
         $enrollments = Enrollment::where('student_id', $student->id)
-            ->with(['subject', 'grades']) 
+            ->with(['subject', 'grades'])
             ->get();
 
+        // Calculate GWA (General Weighted Average)
+        $totalGrades = 0;
+        $totalSubjects = 0;
 
-        return view('studentviews.index', compact('student', 'enrollments'));
+        foreach ($enrollments as $enrollment) {
+            $grade = optional($enrollment->grades->first())->grade;
+            if ($grade) {
+                $totalGrades += $grade;
+                $totalSubjects++;
+            }
+        }
+
+        $gwa = $totalSubjects > 0 ? number_format($totalGrades / $totalSubjects, 2) : null;
+
+        return view('studentviews.index', compact('student', 'enrollments', 'gwa'));
     }
 }

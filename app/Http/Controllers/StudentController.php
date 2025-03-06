@@ -38,9 +38,9 @@ class StudentController extends Controller {
         }
     }
 
-    public function edit(Student $student) {
-        return view('students.edit', compact('student'));
-    }
+    // public function edit(Student $student) {
+    //     return view('students.edit', compact('student'));
+    // }
     
     public function update(StudentRequest $request, Student $student)
 {

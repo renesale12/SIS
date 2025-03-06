@@ -11,12 +11,14 @@
             @csrf
             @method('PUT')
 
-            <input type="hidden" name="grade_id" id="edit_grade_id">
+            <!-- <input type="hidden" name="grade_id" id="edit_grade_id"> -->
+            <input type="hidden" name="student_id" value="{{ $grade->student_id }}">
+            <input type="hidden" name="subject_id" value="{{ $grade->subject_id }}">
 
             <div class="mb-3">
     <label for="student_name" class="form-label fw-bold">Student</label>
-    <input type="text" id="student_name" class="form-control border-2" 
-           value="{{ optional($grade->student)->name ?? 'Unknown Student' }}" readonly>
+    <input type="text" id="student_name" class="form-control border-2"  
+    value="{{ optional($grade->student)->name ?? 'Unknown Student' }}" readonly>
 </div>
 
 <div class="mb-3">

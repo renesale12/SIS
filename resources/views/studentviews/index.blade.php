@@ -11,6 +11,20 @@
           </div>
         </div>
         <div class="card-body px-0 pb-2">
+          <!-- Student Information and GWA -->
+          <div class="row px-3 mb-4">
+            <div class="col-md-6">
+              <h5 class="mb-1">Student Information</h5>
+              <p class="mb-0"><strong>Name:</strong> {{ $student->name }}</p>
+              <p class="mb-0"><strong>Email:</strong> {{ $student->email }}</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <h5 class="mb-1">General Weighted Average (GWA)</h5>
+              <h3 class="mb-0">{{ $gwa ?? 'N/A' }}</h3>
+            </div>
+          </div>
+
+          <!-- Enrolled Subjects and Grades Table -->
           <h4 class="px-3">Your Enrolled Subjects and Grades</h4>
 
           @if ($enrollments->isEmpty())
@@ -23,17 +37,29 @@
                 <thead class="sticky-top bg-white">
                   <tr>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subject</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Units</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Grade</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Remarks</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($enrollments as $enrollment)
+                    @php
+                      $grade = optional($enrollment->grades->first())->grade;
+                      $remarks = $grade ? ($grade <= 3.0 ? 'Passed' : 'Failed') : 'N/A';
+                    @endphp
                     <tr>
                       <td>
                         <p class="text-xs font-weight-bold mb-0 px-3">{{ $enrollment->subject->name }}</p>
                       </td>
                       <td>
-                        <p class="text-xs text-secondary mb-0 px-3">  {{ optional($enrollment->grades->first())->grade ?? 'N/A' }}</p>
+                        <p class="text-xs text-secondary mb-0 px-3">{{ $enrollment->subject->units }}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs text-secondary mb-0 px-3">{{ $grade ?? 'N/A' }}</p>
+                      </td>
+                      <td>
+                        <p class="text-xs text-secondary mb-0 px-3">{{ $remarks }}</p>
                       </td>
                     </tr>
                   @endforeach

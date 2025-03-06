@@ -11,6 +11,10 @@
             @csrf
             @method('PUT')
 
+
+             <!-- Hidden input for student_id -->
+    <input type="hidden" name="student_id" value="{{ $enrollment->student_id }}">
+    
             <!-- Student Name (Fixed, Cannot be Edited) -->
             <div class="mb-3">
                 <label class="form-label fw-bold">Student</label>

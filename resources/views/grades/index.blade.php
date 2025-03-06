@@ -1,5 +1,5 @@
 @extends('layouts.dashlayout')
-@section('title', 'Grades- Admin Dashboard')
+@section('title', 'Grades')
 @section('content')
 <div class="container-fluid py-2">
     <div class="row">
@@ -14,6 +14,21 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
+                @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          @endif
+          @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+          @endif
                     <!-- Grades Table -->
                     <div class="table-responsive p-0" style="max-height: 550px; overflow-y: auto;">
                         <table class="table align-items-center mb-0">

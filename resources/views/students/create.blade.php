@@ -14,6 +14,12 @@
             @csrf
 
             <div class="mb-3">
+                <label for="course" class="form-label">Student ID:</label>
+                <input type="text" name="course" class="form-control" value="{{ old('course') }}" required>
+            </div>
+
+
+            <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
             </div>
@@ -23,10 +29,7 @@
                 <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
             </div>
 
-            <div class="mb-3">
-                <label for="course" class="form-label">Course:</label>
-                <input type="text" name="course" class="form-control" value="{{ old('course') }}" required>
-            </div>
+           
 
             <button type="submit" class="btn btn-success">Save Student</button>
         </form>
