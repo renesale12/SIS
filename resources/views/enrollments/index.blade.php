@@ -1,5 +1,5 @@
 @extends('layouts.dashlayout')
-
+@section('title', 'Enrollments- Admin Dashboard')
 @section('content')
 <div class="container-fluid py-2">
     <div class="row">

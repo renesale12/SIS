@@ -1,4 +1,5 @@
 @extends('layouts.dashlayout')
+@section('title', 'Subjects- Admin Dashboard')
 
 @section('content')
 <div class="container-fluid py-2">
