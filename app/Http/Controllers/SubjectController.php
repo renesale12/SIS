@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\SubjectRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Service\SubjectServiceController;
 use App\Models\Subject;
@@ -26,13 +26,9 @@ class SubjectController extends Controller
         return view('subjects.create');
     }
 
-    public function store(Request $request)
+    public function store(SubjectRequest $request)
     {
-        $request->validate([
-            'code' => 'required|unique:subjects',
-            'name' => 'required',
-            'units' => 'required|integer'
-        ]);
+    
 
         Subject::create($request->except('_token')); // ✅ Exclude `_token`
     return redirect()->route('subjects.index')->with('success', 'Subject created successfully');

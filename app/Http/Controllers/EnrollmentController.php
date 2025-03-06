@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\EnrollmentRequest;
 use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Subject;
@@ -28,13 +28,9 @@ class EnrollmentController extends Controller
     }
     
 
-    public function store(Request $request)
+    public function store(EnrollmentRequest $request)
     {
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'subject_id' => 'required|exists:subjects,id',
-        ]);
-
+        
         Enrollment::create($request->all());
 
         return redirect()->route('enrollments.index')->with('success', 'Enrollment created successfully.');
@@ -46,11 +42,8 @@ class EnrollmentController extends Controller
         return redirect()->route('enrollments.index')->with('success', 'Enrollment deleted successfully.');
     }
 
-    public function update(Request $request, Enrollment $enrollment)
+    public function update(EnrollmentRequest $request, Enrollment $enrollment)
 {
-    $request->validate([
-        'subject_id' => 'required|exists:subjects,id',
-    ]);
 
     // Update only the subject
     $enrollment->update([

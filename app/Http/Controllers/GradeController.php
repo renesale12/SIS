@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\GradeRequest;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Student;
@@ -33,13 +33,9 @@ class GradeController extends Controller {
 }
 
     // Store a new grade
-    public function store(Request $request)
+    public function store(GradeRequest $request)
     {
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'subject_id' => 'required|exists:subjects,id',
-            'grade' => 'required|numeric|min:1|max:5',
-        ]);
+      
     
         // Find the enrollment (it must exist for a student to receive a grade)
         $enrollment = Enrollment::where('student_id', $request->student_id)

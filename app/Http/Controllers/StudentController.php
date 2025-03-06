@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\StudentRequest;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,13 +21,8 @@ class StudentController extends Controller {
     }
 
     // Store new student with default password
-    public function store(Request $request) {
-        // Validate the request
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email',
+    public function store(StudentRequest $request) {
         
-        ]);
     
         try {
             // Create student with default password
@@ -47,21 +42,18 @@ class StudentController extends Controller {
         return view('students.edit', compact('student'));
     }
     
-    public function update(Request $request, Student $student) {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email,' . $student->id,
-        ]);
+    public function update(StudentRequest $request, Student $student)
+{
+    // Pass the student ID to the request for unique email validation
+    $request->merge(['student_id' => $student->id]);
 
-        // Check if password is provided
-        if ($request->filled('password')) {
-            $student->password = Hash::make($request->password);
-        }
-
-        $student->update($request->except('password'));
-    
-        return redirect()->route('students.index')->with('success', 'Student updated successfully!');
+    if ($request->filled('password')) {
+        $student->password = Hash::make($request->password);
     }
+
+    $student->update($request->except('password'));
+    return redirect()->route('students.index')->with('success', 'Student updated successfully!');
+}
     
     public function destroy(Student $student) {
         $student->delete();

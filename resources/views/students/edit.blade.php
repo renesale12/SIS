@@ -13,6 +13,10 @@
           @csrf
           @method('PUT')
 
+
+           <!-- Hidden input for student_id -->
+    <input type="hidden" name="student_id" value="{{ $student->id }}">
+    
           <div class="mb-3">
             <label for="name{{ $student->id }}" class="form-label">Name:</label>
             <input type="text" id="name{{ $student->id }}" name="name" class="form-control"
