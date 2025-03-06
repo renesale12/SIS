@@ -1,5 +1,5 @@
 @extends('layouts.studentdashlayout')
-@yield('title', 'Grades')
+@section('title', 'Grades')
 @section('studentcontent')
 <div class="container-fluid py-2">
   <div class="row">
