@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\SubjectRequest;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Service\SubjectServiceController;
 use App\Models\Subject;
@@ -50,11 +51,20 @@ class SubjectController extends Controller
         return redirect()->route('subjects.index')->with('success', 'Subject updated successfully!');
     }
 
-    public function destroy($id)
-    {
-        $this->subjectService->deleteSubject($id);
-        return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully!');
+   public function destroy($id)
+{
+    // Check if the subject has enrolled students
+    $enrollmentCount = Enrollment::where('subject_id', $id)->count();
+
+    if ($enrollmentCount > 0) {
+        return redirect()->route('subjects.index')->with('error', 'Cannot delete this subject. Students are currently enrolled.');
     }
+
+    // Proceed with deletion if no students are enrolled
+    $this->subjectService->deleteSubject($id);
+    return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully!');
+}
+
 }
 
 

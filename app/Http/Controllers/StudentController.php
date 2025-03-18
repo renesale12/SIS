@@ -55,8 +55,15 @@ class StudentController extends Controller {
     return redirect()->route('students.index')->with('success', 'Student updated successfully!');
 }
     
-    public function destroy(Student $student) {
-        $student->delete();
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
+   public function destroy(Student $student) {
+    // Check if the student is currently enrolled
+    if ($student->enrollments()->exists()) {
+        return redirect()->route('students.index')->with('error', 'Cannot delete: The student is currently enrolled.');
     }
+
+    // If not enrolled, proceed with deletion
+    $student->delete();
+    return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
+}
+
 }

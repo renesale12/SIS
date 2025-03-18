@@ -32,8 +32,8 @@ class StudentViewController extends Controller
 
         foreach ($enrollments as $enrollment) {
             $grade = optional($enrollment->grades->first())->grade;
-            if ($grade) {
-                $totalGrades += $grade;
+            if (is_numeric($grade)) {  
+                $totalGrades += (float) $grade;
                 $totalSubjects++;
             }
         }

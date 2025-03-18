@@ -11,7 +11,7 @@ class Grade extends Model {
     protected $fillable = ['enrollment_id', 'grade'];
 
     protected $casts = [
-        'grade' => 'decimal:2', 
+        // 'grade' => 'decimal:2', 
     ];
 
     // Get the enrollment associated with the grade

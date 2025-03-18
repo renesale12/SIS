@@ -15,7 +15,8 @@ return new class extends Migration
         $table->id();
         $table->foreignId('student_id')->constrained()->onDelete('cascade');
         $table->foreignId('subject_id')->constrained()->onDelete('cascade');
-        $table->decimal('grade', 3, 2); // Allows values like 1.25, 2.50, 3.00
+        // $table->decimal('grade', 3, 2); // Allows values like 1.25, 2.50, 3.00
+        $table->string('grade'); // Change from decimal to string to support INC & FDA
         $table->timestamps();
     });
 }

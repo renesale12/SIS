@@ -16,21 +16,45 @@
                 </div>
                 <div class="card-body px-0 pb-2">
 
-                                    @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ session('success') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            @endif
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                @if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: "{{ session('success') }}",
+            showConfirmButton: false,
+            timer: 3000 
+        });
+    </script>
+@endif
+
+@if ($errors->any())
+    <script>
+        let errorMessages = '';
+        @foreach ($errors->all() as $error)
+            errorMessages += "{{ $error }}\n";
+        @endforeach
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops! Something went wrong.',
+            text: errorMessages,
+            confirmButtonColor: '#d33',
+        });
+    </script>
+@endif
+
+@if (session('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: "{{ session('error') }}",
+            confirmButtonColor: '#d33',
+        });
+    </script>
+@endif
+
                     <!-- Enrollment Table -->
                     <div class="table-responsive p-0" style="max-height: 550px; overflow-y: auto;">
                         <table class="table align-items-center mb-0">
@@ -56,13 +80,33 @@
                                     </button>
 
 
-                                        <form action="{{ route('enrollments.destroy', $enrollment->id) }}" method="POST" class="d-inline">
+                                    <form id="deleteEnrollmentForm{{ $enrollment->id }}" action="{{ route('enrollments.destroy', $enrollment->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-link text-danger text-gradient px-3 mb-0">
+                                            <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0" onclick="confirmDeleteEnrollment({{ $enrollment->id }})">
                                                 <i class="material-symbols-rounded">delete</i> Delete
                                             </button>
                                         </form>
+
+                                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                        <script>
+                                            function confirmDeleteEnrollment(enrollmentId) {
+                                                Swal.fire({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, this enrollment cannot be restored.",
+                                                    icon: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#d33",
+                                                    cancelButtonColor: "#3085d6",
+                                                    confirmButtonText: "Yes, delete it!"
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById("deleteEnrollmentForm" + enrollmentId).submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+
                                     </td>
                                 </tr>
 
