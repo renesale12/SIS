@@ -13,10 +13,10 @@
         <form action="{{ route('students.store') }}" method="POST">
             @csrf
 
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="course" class="form-label">Student ID:</label>
                 <input type="text" name="course" class="form-control" value="{{ old('course') }}" required>
-            </div>
+            </div> -->
 
 
             <div class="mb-3">

@@ -31,9 +31,14 @@
                 </select>
             </div>
 
-            <div class="mb-3">
+           <div class="mb-3">
                 <label for="grade" class="form-label">Grade:</label>
-                <input type="number" name="grade" id="grade" class="form-control" min="0" max="100" step="0.01" required>
+                <select name="grade" id="grade" class="form-select" required>
+                    <option value="">Select Grade</option>
+                    @foreach(['1.0', '1.25', '1.5', '1.75', '2.0', '2.25', '2.5', '2.75', '3.0', '3.25', '3.5', '3.75', '4.0', '4.25', '4.5', '4.75', '5.0', 'INC', 'FDA'] as $grade)
+                        <option value="{{ $grade }}">{{ $grade }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="d-flex justify-content-between">

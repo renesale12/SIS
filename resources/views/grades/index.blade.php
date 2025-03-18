@@ -54,8 +54,7 @@
                                     </td>
                                     <td class="align-middle">
                                     <button type="button" class="btn btn-link text-warning text-gradient px-3 mb-0" 
-                                            data-bs-toggle="modal" data-bs-target="#editGradeModal"
-                                            >
+                                            data-bs-toggle="modal" data-bs-target="#editGradeModal{{ $grade->id }}">
                                         <i class="material-symbols-rounded">edit</i> Edit
                                     </button>
 
